@@ -4,7 +4,39 @@ export enum ParrotTypes {
     NORWEGIAN_BLUE,
 }
 
-export class Parrot {
+export interface Parrot {
+
+    getSpeed(): number;
+    baseSpeed: number;
+
+}
+
+export class ParrotEuropean implements Parrot{
+
+    baseSpeed = 12;
+
+    public getSpeed(){
+        return this.baseSpeed;
+    }
+
+}
+
+export class ParrotAfrican implements Parrot{
+
+    constructor(private numberOfCoconuts: number){
+        
+    }
+
+    baseSpeed = 12;
+    private loadFactor = 9
+
+    public getSpeed(){
+        return Math.max(0, this.baseSpeed - this.loadFactor * this.numberOfCoconuts)
+    }
+
+}
+
+export class OldParrot {
     constructor(private parrotType: ParrotTypes,
                 private numberOfCoconuts: number,
                 private voltage: number,
