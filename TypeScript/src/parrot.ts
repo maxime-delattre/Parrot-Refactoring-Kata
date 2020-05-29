@@ -1,70 +1,39 @@
-export enum ParrotTypes {
-    EUROPEAN,
-    AFRICAN,
-    NORWEGIAN_BLUE,
-}
-
 export interface Parrot {
-
-    getSpeed(): number;
-    baseSpeed: number;
-
+  getSpeed(): number;
 }
 
-export class ParrotEuropean implements Parrot{
-
-    baseSpeed = 12;
-
-    public getSpeed(){
-        return this.baseSpeed;
-    }
-
+export class ParrotEuropean implements Parrot {
+  public getSpeed() {
+    return 12;
+  }
 }
 
-export class ParrotAfrican implements Parrot{
+export class ParrotAfrican implements Parrot {
+  private readonly BASE_SPEED = 12;
+  private readonly LOAD_FACTOR = 9;
 
-    constructor(private numberOfCoconuts: number){
-        
-    }
+  constructor(private readonly numberOfCoconuts: number) {
+  }
 
-    baseSpeed = 12;
-    private loadFactor = 9
-
-    public getSpeed(){
-        return Math.max(0, this.baseSpeed - this.loadFactor * this.numberOfCoconuts)
-    }
-
+  public getSpeed() {
+    return Math.max(0, this.BASE_SPEED - this.LOAD_FACTOR * this.numberOfCoconuts)
+  }
 }
 
-export class OldParrot {
-    constructor(private parrotType: ParrotTypes,
-                private numberOfCoconuts: number,
-                private voltage: number,
-                private isNailed: boolean) {
-    }
+export class NorwegianBlueParrot implements Parrot {
+  private readonly BASE_SPEED: number = 12;
 
-    public getSpeed(): number {
-        switch (this.parrotType) {
-            case ParrotTypes.EUROPEAN:
-                return this.getBaseSpeed();
-            case ParrotTypes.AFRICAN:
-                return Math.max(0, this.getBaseSpeed() - this.getLoadFactor() * this.numberOfCoconuts);
-            case ParrotTypes.NORWEGIAN_BLUE:
-                return (this.isNailed) ? 0 : this.getBaseSpeedWithVoltage(this.voltage);
-        }
-        throw new Error("Should be unreachable");
-    }
+  constructor(private readonly isNailed: boolean,
+              private readonly voltage: number) {
+  }
 
-    private getBaseSpeed(): number {
-        return 12;
-    }
+  getSpeed(): number {
+    return this.isNailed ? 0 : this.getBaseSpeedWithVoltage();
+  }
 
-    private getLoadFactor(): number {
-        return 9;
-    }
+  private readonly MINIMAL_SPEED_WHEN_NOT_NAILED = 24;
 
-    private getBaseSpeedWithVoltage(voltage: number): number {
-        return Math.min(24, voltage * this.getBaseSpeed());
-    }
-
+  private getBaseSpeedWithVoltage(): number {
+    return Math.min(this.MINIMAL_SPEED_WHEN_NOT_NAILED, this.voltage * this.BASE_SPEED);
+  }
 }

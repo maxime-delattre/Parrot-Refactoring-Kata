@@ -1,6 +1,6 @@
-import { expect } from "chai";
+import {expect} from "chai";
 import "mocha";
-import {  ParrotTypes, ParrotEuropean, OldParrot, ParrotAfrican } from "../src/parrot";
+import {NorwegianBlueParrot, ParrotAfrican, ParrotEuropean} from "../src/parrot";
 
 describe("Parrot", () => {
 
@@ -29,19 +29,19 @@ describe("Parrot", () => {
     });
 
     it("gets speed of Norwegian Blue Parrot nailed", () => {
-        const parrot = new OldParrot(ParrotTypes.NORWEGIAN_BLUE, 0, 1.5, true);
+        const parrot = new NorwegianBlueParrot(  true, 1.5);
 
         expect(parrot.getSpeed()).eql(0);
     });
 
     it("gets speed of Norwegian Blue Parrot not nailed", () => {
-        const parrot = new OldParrot(ParrotTypes.NORWEGIAN_BLUE, 0, 1.5, false);
+        const parrot = new NorwegianBlueParrot( false, 1.5);
 
         expect(parrot.getSpeed()).eql(18);
     });
 
     it("gets speed of Norwegian Blue Parrot not nailed high voltage", () => {
-        const parrot = new OldParrot(ParrotTypes.NORWEGIAN_BLUE, 0, 4, false);
+        const parrot = new NorwegianBlueParrot( false, 4);
 
         expect(parrot.getSpeed()).eql(24);
     });
